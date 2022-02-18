@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,23 +10,43 @@ namespace ConsoleApp1
 {
     internal class Program
     {
+        // наверное, что-то - как-то нужно будет запоминать.
+        // Импорт функции GetPrivateProfileInt (для чтения значений) из библиотеки kernel32.dll
+        [DllImport("kernel32.dll", EntryPoint = "GetPrivateProfileInt")]
+        private static extern uint GetPrivateInt(string section, string key, int def, string path);
+
+        // Импорт функции GetPrivateProfileString (для чтения значений) из библиотеки kernel32.dll
+        [DllImport("kernel32.dll", EntryPoint = "GetPrivateProfileString")]
+        private static extern int GetPrivateString(string section, string key, string def, StringBuilder buffer, int size, string path);
+
+        // Импорт функции WritePrivateProfileString (для записи значений) из библиотеки kernel32.dll
+        [DllImport("kernel32.dll", EntryPoint = "WritePrivateProfileString")]
+        private static extern int WritePrivateString(string section, string key, string str, string path);
+
+
         static void Main(string[] args)
         {
-            Console.Clear();
-
             Console.Title = "Training Calculator";
 
-            //Console.WriteLine("Hello World!\n");
+            Console.Clear();
+
             //Console.BackgroundColor = ConsoleColor.Green;
-            //Console.WriteLine("Hello World!\n");
             //Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Hello World! My brilliant idea. Version: -1\n");
+
+            string location = System.Reflection.Assembly.GetEntryAssembly().Location;
+            string IniFile = location.Replace(".exe", ".ini");
+            StringBuilder buff = new StringBuilder(260);
+
+            int level;
+            level = (int)GetPrivateInt("SECTION", "LEVEL", 1, IniFile);
+            //GetPrivateString("SECTION", "WELL", "", buff, 260, IniFile);
 
             Random rnd = new Random();
             int a, b; // c, d, e... ets
             int res;
             int count = 0;
-            int level = 1;
+
             char oper = '+';
             char operation1 = '+';
             char operation2 = '-';
@@ -42,7 +64,7 @@ namespace ConsoleApp1
                 {
                     case '+':res = a + b;
                         break;
-                    default:
+                    //default:
                 }
                 Console.CursorTop = 5;
 
@@ -64,6 +86,8 @@ namespace ConsoleApp1
                     Console.CursorLeft = 0;
                 }
             } while (cki.Key != ConsoleKey.Escape && cki.Key != ConsoleKey.Q);
+
+            WritePrivateString("SECTION", "LEVEL", level.ToString(), IniFile);
         }
     }
 }
