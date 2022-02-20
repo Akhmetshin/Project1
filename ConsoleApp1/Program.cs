@@ -98,23 +98,30 @@ namespace ConsoleApp1
                 cursorLeft = Console.CursorLeft;
                 string buff = res.ToString();
                 int len = buff.Length;
+                char key = ' ';
 
                 for (int i = 0; i < len; i++)
                 {
                     Console.CursorTop = 5;
                     cki = Console.ReadKey(true);
+ 
                     if (cki.Key == ConsoleKey.Escape || cki.Key == ConsoleKey.Q) { flagBreak = true; break; }
-                    if (cki.Key >= ConsoleKey.D0 && cki.Key <= ConsoleKey.D9)
+                    
+                    key = ' ';
+                    if (cki.Key >= ConsoleKey.D0 && cki.Key <= ConsoleKey.D9) { key = (char)cki.Key; }
+                    if (cki.Key >= ConsoleKey.NumPad0 && cki.Key <= ConsoleKey.NumPad9) { key = (char)(cki.Key - 48); }
+
+                    if (key >= '0' && key <= '9')
                     {
-                        if ((char)cki.Key == buff[i])
+                        if (key == buff[i])
                         {
-                            Console.Write(((int)cki.Key - 48).ToString());
+                            Console.Write(key);
                             cursorLeft = Console.CursorLeft;
                             Console.Beep();
                         }
                         else
                         {
-                            Console.Write(((int)cki.Key - 48).ToString());
+                            Console.Write(key);
                             Console.CursorLeft = cursorLeft;
                             Console.Beep(1500, 150);
                             i--;
@@ -124,12 +131,15 @@ namespace ConsoleApp1
                     {
                         Console.CursorLeft = 0;
                         Console.CursorTop = 20;
+                        Console.Write("                                               ");
+                        Console.CursorLeft = 0;
                         Console.Write(" --- You pressed ");
                         if ((cki.Modifiers & ConsoleModifiers.Alt) != 0) Console.Write("ALT+");
                         if ((cki.Modifiers & ConsoleModifiers.Shift) != 0) Console.Write("SHIFT+");
                         if ((cki.Modifiers & ConsoleModifiers.Control) != 0) Console.Write("CTL+");
                         Console.Write(cki.Key.ToString());
                         Console.CursorLeft = cursorLeft;
+                        Console.Beep(2000, 70);
                         i--;
                     }
                 }
