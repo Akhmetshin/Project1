@@ -99,16 +99,26 @@ namespace ConsoleApp1
                 string buff = res.ToString();
                 int len = buff.Length;
 
-                for(int i = 0; i < len; i++)
+                for (int i = 0; i < len; i++)
                 {
                     Console.CursorTop = 5;
                     cki = Console.ReadKey(true);
                     if (cki.Key == ConsoleKey.Escape || cki.Key == ConsoleKey.Q) { flagBreak = true; break; }
                     if (cki.Key >= ConsoleKey.D0 && cki.Key <= ConsoleKey.D9)
                     {
-                        Console.Write(((int)cki.Key - 48).ToString());
-                        cursorLeft = Console.CursorLeft;
-                        Console.Beep();
+                        if ((char)cki.Key == buff[i])
+                        {
+                            Console.Write(((int)cki.Key - 48).ToString());
+                            cursorLeft = Console.CursorLeft;
+                            Console.Beep();
+                        }
+                        else
+                        {
+                            Console.Write(((int)cki.Key - 48).ToString());
+                            Console.CursorLeft = cursorLeft;
+                            Console.Beep(1500, 150);
+                            i--;
+                        }
                     }
                     else
                     {
