@@ -49,10 +49,6 @@ namespace ConsoleApp1
             int count = 0;
 
             char[] oper = { '+', '-', '*', '/' };
-            char operation1 = '+';
-            char operation2 = '-';
-            char operation3 = '*';
-            char operation4 = '/';
             int operMax;
             int indexOper;
 
@@ -62,6 +58,7 @@ namespace ConsoleApp1
             aMin = 1; aMax = 4; bMin = 1; bMax = 4;
             operMax = 1;
             res = 0;
+            bool flagBreak = false;
             do
             {
                 switch (level)
@@ -76,7 +73,6 @@ namespace ConsoleApp1
                     case 8: aMin = 10; aMax = 51; bMin = 10; bMax = 51; operMax = 4; break;
                     case 9: aMin = 10; aMax = 21; bMin = 10; bMax = 21; operMax = 5; break;
                     case 10:aMin = 50; aMax = 101;bMin = 50; bMax = 101;operMax = 5; break;
-                    // надо переходить на польскую нотацию и добавлять скобки.
                     default: break;
                 }
                 a = rnd.Next(aMin, aMax);
@@ -89,6 +85,7 @@ namespace ConsoleApp1
                     case 2: res = a - b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} - {1} = ", a, b); break;
                     case 3: res = a * b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} * {1} = ", a, b); break;
                     case 4: res = a / b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} / {1} = ", a, b); break;
+                    // надо переходить на польскую нотацию и добавлять переменные и скобки.
                     default: break;
                 }
 
@@ -96,25 +93,28 @@ namespace ConsoleApp1
                 int len = buff.Length;
 
                 //Console.CursorTop = 5;
-
-                cki = Console.ReadKey(true);
-                if (cki.Key >= ConsoleKey.D0 && cki.Key <= ConsoleKey.D9)
+                for(int i = 0; i < len; i++)
                 {
-                    Console.Beep();
-                    Console.Write(((int)cki.Key - 48).ToString());
-                    Console.CursorLeft = 0;
+                    cki = Console.ReadKey(true);
+                    if (cki.Key >= ConsoleKey.D0 && cki.Key <= ConsoleKey.D9)
+                    {
+                        Console.Beep();
+                        Console.Write(((int)cki.Key - 48).ToString());
+                        Console.CursorLeft = 0;
+                    }
+                    else
+                    {
+                        Console.CursorTop = 20;
+                        Console.Write(" --- You pressed ");
+                        if ((cki.Modifiers & ConsoleModifiers.Alt) != 0) Console.Write("ALT+");
+                        if ((cki.Modifiers & ConsoleModifiers.Shift) != 0) Console.Write("SHIFT+");
+                        if ((cki.Modifiers & ConsoleModifiers.Control) != 0) Console.Write("CTL+");
+                        //Console.Write(cki.Key.ToString());
+                        Console.CursorLeft = 0;
+                    }
+                    if (cki.Key != ConsoleKey.Escape && cki.Key != ConsoleKey.Q) { flagBreak = true; break; }
                 }
-                else
-                {
-                    Console.CursorTop = 20;
-                    Console.Write(" --- You pressed ");
-                    if ((cki.Modifiers & ConsoleModifiers.Alt) != 0) Console.Write("ALT+");
-                    if ((cki.Modifiers & ConsoleModifiers.Shift) != 0) Console.Write("SHIFT+");
-                    if ((cki.Modifiers & ConsoleModifiers.Control) != 0) Console.Write("CTL+");
-                    //Console.Write(cki.Key.ToString());
-                    Console.CursorLeft = 0;
-                }
-            } while (cki.Key != ConsoleKey.Escape && cki.Key != ConsoleKey.Q);
+            } while (flagBreak);
 
             WritePrivateString("SECTION", "LEVEL", level.ToString(), IniFile);
         }
