@@ -98,7 +98,7 @@ namespace ConsoleApp1
                 cursorLeft = Console.CursorLeft;
                 string buff = res.ToString();
                 int len = buff.Length;
-                char key = ' ';
+                char key;
 
                 for (int i = 0; i < len; i++)
                 {
