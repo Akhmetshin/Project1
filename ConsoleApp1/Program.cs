@@ -51,6 +51,7 @@ namespace ConsoleApp1
             char[] oper = { '+', '-', '*', '/' };
             int operMax;
             int indexOper;
+            int cursorLeft;
 
             // https://docs.microsoft.com/ru-ru/dotnet/api/system.console.readkey?view=netframework-4.7.2&f1url=%3FappId%3DDev16IDEF1%26l%3DRU-RU%26k%3Dk(System.Console.ReadKey)
             ConsoleKeyInfo cki;
@@ -79,42 +80,58 @@ namespace ConsoleApp1
                 b = rnd.Next(bMin, bMax);
                 indexOper=rnd.Next(1,operMax);
 
+                Console.CursorTop = 5;
+                Console.Write("                                 ");
+                Console.CursorLeft = 0;
+                Console.CursorTop = 5;
+
                 switch (indexOper)
                 {
-                    case 1: res = a + b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} + {1} = ", a, b); break;
-                    case 2: res = a - b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} - {1} = ", a, b); break;
-                    case 3: res = a * b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} * {1} = ", a, b); break;
-                    case 4: res = a / b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} / {1} = ", a, b); break;
-                    // надо переходить на польскую нотацию и добавлять переменные и скобки.
+                    case 1: res = a + b; Console.Write("{0} + {1} = ", a, b); break;
+                    case 2: res = a - b; Console.Write("{0} - {1} = ", a, b); break;
+                    case 3: res = a * b; Console.Write("{0} * {1} = ", a, b); break;
+                    case 4: res = a / b; Console.Write("{0} / {1} = ", a, b); break;
+                    // надо переходить на польскую нотацию, добавлять переменные и скобки.
                     default: break;
                 }
 
+                cursorLeft = Console.CursorLeft;
                 string buff = res.ToString();
                 int len = buff.Length;
 
-                //Console.CursorTop = 5;
                 for(int i = 0; i < len; i++)
                 {
+                    Console.CursorTop = 5;
                     cki = Console.ReadKey(true);
+                    if (cki.Key == ConsoleKey.Escape || cki.Key == ConsoleKey.Q) { flagBreak = true; break; }
                     if (cki.Key >= ConsoleKey.D0 && cki.Key <= ConsoleKey.D9)
                     {
-                        Console.Beep();
                         Console.Write(((int)cki.Key - 48).ToString());
-                        Console.CursorLeft = 0;
+                        cursorLeft = Console.CursorLeft;
+                        Console.Beep();
                     }
                     else
                     {
+                        Console.CursorLeft = 0;
                         Console.CursorTop = 20;
                         Console.Write(" --- You pressed ");
                         if ((cki.Modifiers & ConsoleModifiers.Alt) != 0) Console.Write("ALT+");
                         if ((cki.Modifiers & ConsoleModifiers.Shift) != 0) Console.Write("SHIFT+");
                         if ((cki.Modifiers & ConsoleModifiers.Control) != 0) Console.Write("CTL+");
-                        //Console.Write(cki.Key.ToString());
-                        Console.CursorLeft = 0;
+                        Console.Write(cki.Key.ToString());
+                        Console.CursorLeft = cursorLeft;
+                        i--;
                     }
-                    if (cki.Key != ConsoleKey.Escape && cki.Key != ConsoleKey.Q) { flagBreak = true; break; }
                 }
-            } while (flagBreak);
+                if (!flagBreak) count++;
+
+                Console.CursorLeft = 0;
+                Console.CursorTop = 20;
+                Console.Write("                                               ");
+                Console.CursorLeft = 0;
+                Console.CursorTop = 5;
+                Console.Write("                                               ");
+            } while (!flagBreak);
 
             WritePrivateString("SECTION", "LEVEL", level.ToString(), IniFile);
         }
