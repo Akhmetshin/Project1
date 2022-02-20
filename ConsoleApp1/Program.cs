@@ -44,28 +44,49 @@ namespace ConsoleApp1
 
             Random rnd = new Random();
             int a, b; // c, d, e... ets
+            int aMin, aMax, bMin, bMax;
             int res;
             int count = 0;
 
-            char oper = '+';
+            char[] oper = { '+', '-', '*', '/' };
             char operation1 = '+';
             char operation2 = '-';
             char operation3 = '*';
             char operation4 = '/';
+            int operMax;
+            int indexOper;
 
             // https://docs.microsoft.com/ru-ru/dotnet/api/system.console.readkey?view=netframework-4.7.2&f1url=%3FappId%3DDev16IDEF1%26l%3DRU-RU%26k%3Dk(System.Console.ReadKey)
             ConsoleKeyInfo cki;
             Console.CursorTop = 20;
+            aMin = 1; aMax = 4; bMin = 1; bMax = 4;
+            operMax = 1;
             do
             {
-                a = rnd.Next(1, 99);
-                b = rnd.Next(1, 99);
-                switch (oper)
+                switch (level)
                 {
-                    case '+':res = a + b;
-                        break;
-                    //default:
+                    case 1: aMin = 1; aMax = 4;  bMin = 1; bMax = 4;  operMax = 1; break;
+                    case 2: aMin = 1; aMax = 10; bMin = 1; bMax = 10; operMax = 1; break;
+                    case 3: aMin = 1; aMax = 20; bMin = 1; bMax = 20; operMax = 1; break;
+                    case 4: aMin = 1; aMax = 50; bMin = 1; bMax = 50; operMax = 1; break;
+                    case 5: aMin = 1; aMax = 10; bMin = 1; bMax = 10; operMax = 2; break;
+                    case 6: aMin = 10; aMax = 50; bMin = 10; bMax = 50; operMax = 2; break;
+                    case 7: aMin = 5; aMax = 10; bMin = 5; bMax = 10; operMax = 3; break;
+                    case 8: aMin = 10; aMax = 50; bMin = 10; bMax = 50; operMax = 3; break;
+                    case 9: aMin = 10; aMax = 20; bMin = 10; bMax = 20; operMax = 4; break;
+                    case 10:aMin = 50; aMax = 100; bMin = 50; bMax = 100; operMax = 4; break;
+                        default: break;
                 }
+                a = rnd.Next(aMin, aMax);
+                b = rnd.Next(bMin, bMax);
+                indexOper=rnd.Next(1,operMax);
+
+                //switch (oper)
+                //{
+                //    case '+':res = a + b;
+                //        break;
+                //    //default:
+                //}
                 Console.CursorTop = 5;
 
                 cki = Console.ReadKey(true);
