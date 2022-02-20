@@ -113,15 +113,14 @@ namespace ConsoleApp1
 
                     if (key >= '0' && key <= '9')
                     {
+                        Console.Write(key);
                         if (key == buff[i])
                         {
-                            Console.Write(key);
                             cursorLeft = Console.CursorLeft;
                             Console.Beep();
                         }
                         else
                         {
-                            Console.Write(key);
                             Console.CursorLeft = cursorLeft;
                             Console.Beep(1500, 150);
                             i--;
