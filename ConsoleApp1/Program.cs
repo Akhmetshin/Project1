@@ -36,7 +36,7 @@ namespace ConsoleApp1
 
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
             string IniFile = location.Replace(".exe", ".ini");
-            StringBuilder buff = new StringBuilder(260);
+            //StringBuilder buff = new StringBuilder(260);
 
             int level;
             level = (int)GetPrivateInt("SECTION", "LEVEL", 1, IniFile);
@@ -61,33 +61,41 @@ namespace ConsoleApp1
             Console.CursorTop = 20;
             aMin = 1; aMax = 4; bMin = 1; bMax = 4;
             operMax = 1;
+            res = 0;
             do
             {
                 switch (level)
                 {
-                    case 1: aMin = 1; aMax = 4;  bMin = 1; bMax = 4;  operMax = 1; break;
-                    case 2: aMin = 1; aMax = 10; bMin = 1; bMax = 10; operMax = 1; break;
-                    case 3: aMin = 1; aMax = 20; bMin = 1; bMax = 20; operMax = 1; break;
-                    case 4: aMin = 1; aMax = 50; bMin = 1; bMax = 50; operMax = 1; break;
-                    case 5: aMin = 1; aMax = 10; bMin = 1; bMax = 10; operMax = 2; break;
-                    case 6: aMin = 10; aMax = 50; bMin = 10; bMax = 50; operMax = 2; break;
-                    case 7: aMin = 5; aMax = 10; bMin = 5; bMax = 10; operMax = 3; break;
-                    case 8: aMin = 10; aMax = 50; bMin = 10; bMax = 50; operMax = 3; break;
-                    case 9: aMin = 10; aMax = 20; bMin = 10; bMax = 20; operMax = 4; break;
-                    case 10:aMin = 50; aMax = 100; bMin = 50; bMax = 100; operMax = 4; break;
-                        default: break;
+                    case 1: aMin = 1;  aMax = 4;  bMin = 1;  bMax = 4;  operMax = 2; break;
+                    case 2: aMin = 1;  aMax = 11; bMin = 1;  bMax = 11; operMax = 2; break;
+                    case 3: aMin = 1;  aMax = 21; bMin = 1;  bMax = 21; operMax = 2; break;
+                    case 4: aMin = 10; aMax = 51; bMin = 10; bMax = 51; operMax = 2; break;
+                    case 5: aMin = 1;  aMax = 11; bMin = 1;  bMax = 11; operMax = 3; break;
+                    case 6: aMin = 10; aMax = 51; bMin = 10; bMax = 51; operMax = 3; break;
+                    case 7: aMin = 5;  aMax = 11; bMin = 5;  bMax = 11; operMax = 4; break;
+                    case 8: aMin = 10; aMax = 51; bMin = 10; bMax = 51; operMax = 4; break;
+                    case 9: aMin = 10; aMax = 21; bMin = 10; bMax = 21; operMax = 5; break;
+                    case 10:aMin = 50; aMax = 101;bMin = 50; bMax = 101;operMax = 5; break;
+                    // надо переходить на польскую нотацию и добавлять скобки.
+                    default: break;
                 }
                 a = rnd.Next(aMin, aMax);
                 b = rnd.Next(bMin, bMax);
                 indexOper=rnd.Next(1,operMax);
 
-                //switch (oper)
-                //{
-                //    case '+':res = a + b;
-                //        break;
-                //    //default:
-                //}
-                Console.CursorTop = 5;
+                switch (indexOper)
+                {
+                    case 1: res = a + b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} + {1} = ", a, b); break;
+                    case 2: res = a - b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} - {1} = ", a, b); break;
+                    case 3: res = a * b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} * {1} = ", a, b); break;
+                    case 4: res = a / b; Console.CursorTop = 5; Console.CursorLeft = 0; Console.Write("{0} / {1} = ", a, b); break;
+                    default: break;
+                }
+
+                string buff = res.ToString();
+                int len = buff.Length;
+
+                //Console.CursorTop = 5;
 
                 cki = Console.ReadKey(true);
                 if (cki.Key >= ConsoleKey.D0 && cki.Key <= ConsoleKey.D9)
