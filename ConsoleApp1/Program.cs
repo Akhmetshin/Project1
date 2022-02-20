@@ -41,6 +41,7 @@ namespace ConsoleApp1
             int level;
             level = (int)GetPrivateInt("SECTION", "LEVEL", 1, IniFile);
             //GetPrivateString("SECTION", "WELL", "", buff, 260, IniFile);
+            uint beep= GetPrivateInt("SECTION", "BEEP", 1, IniFile);
 
             Random rnd = new Random();
             int a, b; // c, d, e... ets
@@ -81,9 +82,10 @@ namespace ConsoleApp1
                 indexOper=rnd.Next(1,operMax);
 
                 Console.CursorTop = 5;
-                Console.Write("                                 ");
                 Console.CursorLeft = 0;
+                Console.Write("                                 ");
                 Console.CursorTop = 5;
+                Console.CursorLeft = 0;
 
                 switch (indexOper)
                 {
@@ -117,12 +119,12 @@ namespace ConsoleApp1
                         if (key == buff[i])
                         {
                             cursorLeft = Console.CursorLeft;
-                            Console.Beep();
+                            if (beep > 0) Console.Beep();
                         }
                         else
                         {
                             Console.CursorLeft = cursorLeft;
-                            Console.Beep(1500, 150);
+                            if (beep > 0) Console.Beep(1500, 150);
                             i--;
                         }
                     }
@@ -138,7 +140,7 @@ namespace ConsoleApp1
                         if ((cki.Modifiers & ConsoleModifiers.Control) != 0) Console.Write("CTL+");
                         Console.Write(cki.Key.ToString());
                         Console.CursorLeft = cursorLeft;
-                        Console.Beep(2000, 70);
+                        if (beep > 0) Console.Beep(2000, 70);
                         i--;
                     }
                 }
@@ -147,9 +149,9 @@ namespace ConsoleApp1
                 Console.CursorLeft = 0;
                 Console.CursorTop = 20;
                 Console.Write("                                               ");
-                Console.CursorLeft = 0;
-                Console.CursorTop = 5;
-                Console.Write("                                               ");
+                //Console.CursorLeft = 0;
+                //Console.CursorTop = 5;
+                //Console.Write("                                               ");
             } while (!flagBreak);
 
             WritePrivateString("SECTION", "LEVEL", level.ToString(), IniFile);
