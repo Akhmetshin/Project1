@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleApp1
@@ -36,11 +37,9 @@ namespace ConsoleApp1
 
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
             string IniFile = location.Replace(".exe", ".ini");
-            //StringBuilder buff = new StringBuilder(260);
 
             int level;
             level = (int)GetPrivateInt("SECTION", "LEVEL", 1, IniFile);
-            //GetPrivateString("SECTION", "WELL", "", buff, 260, IniFile);
             uint beep= GetPrivateInt("SECTION", "BEEP", 1, IniFile);
 
             Random rnd = new Random();
@@ -54,7 +53,6 @@ namespace ConsoleApp1
             int indexOper;
             int cursorLeft;
 
-            // https://docs.microsoft.com/ru-ru/dotnet/api/system.console.readkey?view=netframework-4.7.2&f1url=%3FappId%3DDev16IDEF1%26l%3DRU-RU%26k%3Dk(System.Console.ReadKey)
             ConsoleKeyInfo cki;
             Console.CursorTop = 20;
             aMin = 1; aMax = 4; bMin = 1; bMax = 4;
@@ -134,6 +132,7 @@ namespace ConsoleApp1
                         Console.CursorTop = 20;
                         Console.Write("                                               ");
                         Console.CursorLeft = 0;
+                        // https://docs.microsoft.com/ru-ru/dotnet/api/system.console.readkey?view=netframework-4.7.2&f1url=%3FappId%3DDev16IDEF1%26l%3DRU-RU%26k%3Dk(System.Console.ReadKey)
                         Console.Write(" --- You pressed ");
                         if ((cki.Modifiers & ConsoleModifiers.Alt) != 0) Console.Write("ALT+");
                         if ((cki.Modifiers & ConsoleModifiers.Shift) != 0) Console.Write("SHIFT+");
@@ -152,6 +151,9 @@ namespace ConsoleApp1
                 //Console.CursorLeft = 0;
                 //Console.CursorTop = 5;
                 //Console.Write("                                               ");
+                
+                Thread.Sleep(250);
+
             } while (!flagBreak);
 
             WritePrivateString("SECTION", "LEVEL", level.ToString(), IniFile);
