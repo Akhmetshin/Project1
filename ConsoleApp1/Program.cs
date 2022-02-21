@@ -54,7 +54,7 @@ namespace ConsoleApp1
             int cursorLeft;
 
             ConsoleKeyInfo cki;
-            Console.CursorTop = 20;
+            Console.CursorTop = 15;
             aMin = 1; aMax = 4; bMin = 1; bMax = 4;
             operMax = 1;
             res = 0;
@@ -79,10 +79,10 @@ namespace ConsoleApp1
                 b = rnd.Next(bMin, bMax);
                 indexOper=rnd.Next(1,operMax);
 
-                Console.CursorTop = 5;
+                Console.CursorTop = 3;
                 Console.CursorLeft = 0;
                 Console.Write("                                 ");
-                Console.CursorTop = 5;
+                Console.CursorTop = 3;
                 Console.CursorLeft = 0;
 
                 switch (indexOper)
@@ -102,7 +102,7 @@ namespace ConsoleApp1
 
                 for (int i = 0; i < len; i++)
                 {
-                    Console.CursorTop = 5;
+                    Console.CursorTop = 3;
                     cki = Console.ReadKey(true);
  
                     if (cki.Key == ConsoleKey.Escape || cki.Key == ConsoleKey.Q) { flagBreak = true; break; }
@@ -129,7 +129,7 @@ namespace ConsoleApp1
                     else
                     {
                         Console.CursorLeft = 0;
-                        Console.CursorTop = 20;
+                        Console.CursorTop = 15;
                         Console.Write("                                               ");
                         Console.CursorLeft = 0;
                         // https://docs.microsoft.com/ru-ru/dotnet/api/system.console.readkey?view=netframework-4.7.2&f1url=%3FappId%3DDev16IDEF1%26l%3DRU-RU%26k%3Dk(System.Console.ReadKey)
@@ -143,16 +143,32 @@ namespace ConsoleApp1
                         i--;
                     }
                 }
+
+                Thread.Sleep(250);
+
                 if (!flagBreak) count++;
+                if (count >= 10) { level++; count = 0; }
 
                 Console.CursorLeft = 0;
-                Console.CursorTop = 20;
+                Console.CursorTop = 15;
                 Console.Write("                                               ");
+                Console.CursorLeft = 0;
+                Console.CursorTop = 5;
+                Console.Write("                                               ");
+                Console.CursorLeft = 0;
+                Console.CursorTop = 5;
+                if (level > 10)
+                {
+                    level = 10;
+                    Console.Write("level: max    count = {0}", count, level);
+                }
+                else
+                {
+                    Console.Write("level: {1}    count = {0}", count, level);
+                }
                 //Console.CursorLeft = 0;
-                //Console.CursorTop = 5;
+                //Console.CursorTop = 3;
                 //Console.Write("                                               ");
-                
-                Thread.Sleep(250);
 
             } while (!flagBreak);
 
