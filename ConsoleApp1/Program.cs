@@ -75,9 +75,15 @@ namespace ConsoleApp1
                     case 10:aMin = 50; aMax = 101;bMin = 50; bMax = 101;operMax = 5; break;
                     default: break;
                 }
+
                 a = rnd.Next(aMin, aMax);
                 b = rnd.Next(bMin, bMax);
                 indexOper=rnd.Next(1,operMax);
+
+                if ((indexOper == 2 || indexOper == 4) && b > a)
+                {
+                    int x = a; a = b; b = x;
+                }
 
                 Console.CursorTop = 3;
                 Console.CursorLeft = 0;
