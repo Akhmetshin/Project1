@@ -27,7 +27,8 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-            Console.Title = "Training Calculator";
+            //Console.Title = "Training Calculator";
+            Console.Title = "CalcTrain";
 
             Console.Clear();
 
