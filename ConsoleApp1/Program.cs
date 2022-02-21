@@ -46,6 +46,7 @@ namespace ConsoleApp1
             int a, b; // c, d, e... ets
             int aMin, aMax, bMin, bMax;
             int res;
+            double resD = 1;
             int count = 0;
 
             char[] oper = { '+', '-', '*', '/' };
@@ -80,10 +81,8 @@ namespace ConsoleApp1
                 b = rnd.Next(bMin, bMax);
                 indexOper=rnd.Next(1,operMax);
 
-                if ((indexOper == 2 || indexOper == 4) && b > a)
-                {
-                    int x = a; a = b; b = x;
-                }
+                a = 1000;b = 2;indexOper = 4;
+                if ((indexOper == 2 || indexOper == 4) && b > a) (b, a) = (a, b);
 
                 Console.CursorTop = 3;
                 Console.CursorLeft = 0;
@@ -96,14 +95,24 @@ namespace ConsoleApp1
                     case 1: res = a + b; Console.Write("{0} + {1} = ", a, b); break;
                     case 2: res = a - b; Console.Write("{0} - {1} = ", a, b); break;
                     case 3: res = a * b; Console.Write("{0} * {1} = ", a, b); break;
-                    case 4: res = a / b; Console.Write("{0} / {1} = ", a, b); break;
+                    case 4: resD= (double)a / b; Console.Write("{0} / {1} = ", a, b); break;
                     // надо переходить на польскую нотацию, добавлять переменные и скобки.
                     default: break;
                 }
 
                 cursorLeft = Console.CursorLeft;
-                string buff = res.ToString();
-                int len = buff.Length;
+                string buff;
+                int len = 0;
+                if (indexOper == 4)
+                {
+                    buff = resD.ToString("F");
+                    len = buff.IndexOf('.');
+                }
+                else
+                {
+                    buff = res.ToString();
+                    len = buff.Length;
+                }
                 char key;
 
                 for (int i = 0; i < len; i++)
@@ -150,31 +159,38 @@ namespace ConsoleApp1
                     }
                 }
 
+                if (!flagBreak)
+                {
+                    count++;
+                    if (indexOper == 4 && len < buff.Length)
+                    {
+                        Console.Write("{0} (ok)", buff.Substring(len));
+                    }
+                    if (count >= 10) { level++; count = 0; }
+
+                    Console.CursorLeft = 0;
+                    Console.CursorTop = 15;
+                    Console.Write("                                               ");
+                    Console.CursorLeft = 0;
+                    Console.CursorTop = 5;
+                    Console.Write("                                               ");
+                    Console.CursorLeft = 0;
+                    Console.CursorTop = 5;
+                    if (level > 10)
+                    {
+                        level = 10;
+                        Console.Write("level: max    count = {0}", count, level);
+                    }
+                    else
+                    {
+                        Console.Write("level: {1}    count = {0}", count, level);
+                    }
+                    //Console.CursorLeft = 0;
+                    //Console.CursorTop = 3;
+                    //Console.Write("                                               ");
+                }
+
                 Thread.Sleep(250);
-
-                if (!flagBreak) count++;
-                if (count >= 10) { level++; count = 0; }
-
-                Console.CursorLeft = 0;
-                Console.CursorTop = 15;
-                Console.Write("                                               ");
-                Console.CursorLeft = 0;
-                Console.CursorTop = 5;
-                Console.Write("                                               ");
-                Console.CursorLeft = 0;
-                Console.CursorTop = 5;
-                if (level > 10)
-                {
-                    level = 10;
-                    Console.Write("level: max    count = {0}", count, level);
-                }
-                else
-                {
-                    Console.Write("level: {1}    count = {0}", count, level);
-                }
-                //Console.CursorLeft = 0;
-                //Console.CursorTop = 3;
-                //Console.Write("                                               ");
 
             } while (!flagBreak);
 
