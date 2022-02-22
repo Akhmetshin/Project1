@@ -30,6 +30,7 @@ namespace ConsoleApp1
             //Console.Title = "Training Calculator";
             Console.Title = "CalcTrain";
 
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Clear();
 
             //Console.BackgroundColor = ConsoleColor.Green;
@@ -82,7 +83,8 @@ namespace ConsoleApp1
                 b = rnd.Next(bMin, bMax);
                 indexOper=rnd.Next(1,operMax);
 
-                a = 1000;b = 2;indexOper = 4;
+                //a = 2; b = 100; indexOper = 4;
+                //a = 1000; b = 900; indexOper = 4;
                 if ((indexOper == 2 || indexOper == 4) && b > a) (b, a) = (a, b);
 
                 Console.CursorTop = 3;
@@ -165,7 +167,11 @@ namespace ConsoleApp1
                     count++;
                     if (indexOper == 4 && len < buff.Length)
                     {
-                        Console.Write("{0} (ok)", buff.Substring(len));
+                        Console.Write("{0}", buff.Substring(len));
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write(" (ok)");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Thread.Sleep(500);
                     }
                     if (count >= 10) { level++; count = 0; }
 
@@ -186,12 +192,15 @@ namespace ConsoleApp1
                     {
                         Console.Write("level: {1}    count = {0}", count, level);
                     }
-                    //Console.CursorLeft = 0;
-                    //Console.CursorTop = 3;
-                    //Console.Write("                                               ");
                 }
 
-                Thread.Sleep(250);
+                Thread.Sleep(500);
+
+                Console.CursorLeft = 0;
+                Console.CursorTop = 3;
+                Console.Write("                                               ");
+                Console.CursorLeft = 0;
+                Console.CursorTop = 3;
 
             } while (!flagBreak);
 
