@@ -30,12 +30,27 @@ namespace ConsoleApp1
             //Console.Title = "Training Calculator";
             Console.Title = "CalcTrain";
 
+            //Console.CursorSize = 100;
+
+            ConsoleHelper.SetCurrentFont("Consolas", 20);
+
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Clear();
 
             //Console.BackgroundColor = ConsoleColor.Green;
             //Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Hello World! My brilliant idea. Version: -1\n");
+
+            //Console.BufferHeight = 30;
+            //Console.SetBufferSize(80, 80);
+
+            //int width = Console.WindowWidth;
+            //int height = Console.WindowHeight;
+
+            //Console.WindowWidth = 60;
+            //Console.WindowHeight = 20;
+
+            //Console.SetWindowSize(60, 20);
 
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
             string IniFile = location.Replace(".exe", ".ini");
@@ -203,6 +218,17 @@ namespace ConsoleApp1
                 Console.CursorTop = 3;
 
             } while (!flagBreak);
+
+            //try
+            //{
+            //    Console.WindowHeight = height;
+            //    Console.WindowWidth = width;
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //    Console.Read();
+            //}
 
             WritePrivateString("SECTION", "LEVEL", level.ToString(), IniFile);
         }
