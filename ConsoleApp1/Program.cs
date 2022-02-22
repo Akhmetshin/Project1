@@ -136,6 +136,7 @@ namespace ConsoleApp1
                 for (int i = 0; i < len; i++)
                 {
                     Console.CursorTop = 3;
+                    Console.CursorVisible = true;
                     cki = Console.ReadKey(true);
  
                     if (cki.Key == ConsoleKey.Escape || cki.Key == ConsoleKey.Q) { flagBreak = true; break; }
@@ -163,6 +164,7 @@ namespace ConsoleApp1
                     {
                         Console.CursorLeft = 0;
                         Console.CursorTop = 15;
+                        Console.CursorVisible = false;
                         Console.Write("                                               ");
                         Console.CursorLeft = 0;
                         // https://docs.microsoft.com/ru-ru/dotnet/api/system.console.readkey?view=netframework-4.7.2&f1url=%3FappId%3DDev16IDEF1%26l%3DRU-RU%26k%3Dk(System.Console.ReadKey)
@@ -176,6 +178,8 @@ namespace ConsoleApp1
                         i--;
                     }
                 }
+
+                Console.CursorVisible = false;
 
                 if (!flagBreak)
                 {
@@ -214,8 +218,8 @@ namespace ConsoleApp1
                 Console.CursorLeft = 0;
                 Console.CursorTop = 3;
                 Console.Write("                                               ");
-                Console.CursorLeft = 0;
-                Console.CursorTop = 3;
+                //Console.CursorLeft = 0;
+                //Console.CursorTop = 3;
 
             } while (!flagBreak);
 
