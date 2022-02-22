@@ -40,7 +40,7 @@ namespace ConsoleApp1
             //Console.BackgroundColor = ConsoleColor.Green;
             //Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Hello World! My brilliant idea. Version: -1\n");
-
+            // https://docs.microsoft.com/ru-ru/dotnet/api/system.console.setwindowsize?view=netframework-4.7.2
             //Console.BufferHeight = 30;
             //Console.SetBufferSize(80, 80);
 
