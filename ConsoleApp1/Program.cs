@@ -51,8 +51,12 @@ namespace ConsoleApp1
 
             //Console.BackgroundColor = ConsoleColor.Green;
             Console.ForegroundColor = ConsoleColor.Red;
-
-            Console.WriteLine("Hello World! My brilliant idea. Version: -1\n");
+            Console.Write("Hello World! My brilliant idea. Version: -1");
+            Console.CursorTop = 0;
+            Console.CursorLeft = 16;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("brilliant");
+            Console.ForegroundColor = ConsoleColor.Red;
 
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
             string IniFile = location.Replace(".exe", ".ini");
@@ -100,9 +104,9 @@ namespace ConsoleApp1
                 b = rnd.Next(bMin, bMax);
                 indexOper=rnd.Next(1,operMax);
 
-                //a = 2; b = 100; indexOper = 4;
+                a = 2; b = 100; indexOper = 4;
                 //a = 1000; b = 900; indexOper = 4;
-                if ((indexOper == 2 || indexOper == 4) && b > a) (b, a) = (a, b);
+                if ((indexOper == 2 || indexOper == 4) && b > a) (b, a) = (a, b); // потому что версия -1.
 
                 Console.CursorTop = 3;
                 Console.CursorLeft = 0;
@@ -123,15 +127,15 @@ namespace ConsoleApp1
                 cursorLeft = Console.CursorLeft;
                 string buff;
                 int len = 0;
-                if (indexOper == 4)
-                {
-                    buff = resD.ToString("F");
-                    len = buff.IndexOf('.');
-                }
-                else
+                if (indexOper != 4)
                 {
                     buff = res.ToString();
                     len = buff.Length;
+                }
+                else
+                {
+                    buff = resD.ToString("F");
+                    len = buff.IndexOf('.');
                 }
                 char key;
 
@@ -188,9 +192,8 @@ namespace ConsoleApp1
                     count++;
                     if (indexOper == 4 && len < buff.Length)
                     {
-                        Console.Write("{0}", buff.Substring(len));
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.Write(" (ok)");
+                        Console.Write("{0} (ok)", buff.Substring(len));
                         Console.ForegroundColor = ConsoleColor.Red;
                         Thread.Sleep(500);
                     }
