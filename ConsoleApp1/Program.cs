@@ -29,7 +29,7 @@ namespace ConsoleApp1
         //public static int saveBufferHeight;
         //public static int saveWindowHeight;
         //public static int saveWindowWidth;
-        //public static bool saveCursorVisible;
+        //public static bool saveCursorVisible; <- оставил эти комментарии как следы моих усилий по управлению окном и шрифтами. проще через ярлык
 
         static void Main(string[] args)
         {
@@ -47,13 +47,11 @@ namespace ConsoleApp1
             //Console.SetBufferSize(60, 20);
             //Console.SetWindowSize(60, 20);
 
-            //ConsoleHelper.SetCurrentFont("Consolas", 20);
-
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Red;
+            //ConsoleHelper.SetCurrentFont("Consolas", 20); <- установка шрифта. лучше через ярлык. файл ConsoleHelper.cs удалил
 
             //Console.BackgroundColor = ConsoleColor.Green;
-            //Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Red;
+
             Console.WriteLine("Hello World! My brilliant idea. Version: -1\n");
 
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
@@ -231,3 +229,7 @@ namespace ConsoleApp1
         }
     }
 }
+
+/*
+ * добавить таймер
+ */
