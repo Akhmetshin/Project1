@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <conio.h>
+
+VOID KeyEventProc(KEY_EVENT_RECORD);
 
 int main()
 {
@@ -41,40 +44,62 @@ int main()
     HWND wnd = GetConsoleWindow();
 
     // https://docs.microsoft.com/en-us/windows/win32/winmsg/using-messages-and-message-queues
-    MSG msg;
-    BOOL bRet;
-    while ((bRet = GetMessage(&msg, GetConsoleWindow(), 0, 0)) != 0)
-    {
-        if (msg.message == VK_ESCAPE)
-        {
-            break;
-        }
-        if (msg.wParam == WM_KEYDOWN)
-        {
-            break;
-        }
-        //switch (msg.message)
-        //{
-        //case WM_KEYDOWN:
-        //}
-        if (bRet == -1)
-        {
-            // handle the error and possibly exit
-        }
-        else
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    } 
+    //MSG msg;
+    //BOOL bRet;
+    //while ((bRet = GetMessage(&msg, GetConsoleWindow(), 0, 0)) != 0)
+    //{
+    //    if (msg.message == VK_ESCAPE)
+    //    {
+    //        break;
+    //    }
+    //    if (msg.wParam == WM_KEYDOWN)
+    //    {
+    //        break;
+    //    }
+    //    //switch (msg.message)
+    //    //{
+    //    //case WM_KEYDOWN:
+    //    //}
+    //    if (bRet == -1)
+    //    {
+    //        // handle the error and possibly exit
+    //    }
+    //    else
+    //    {
+    //        TranslateMessage(&msg);
+    //        DispatchMessage(&msg);
+    //    }
+    //} 
 
-    int c;
-    do
+//    char c;
+//    do
+//    {
+//        //std::cin.ignore();
+//        c = std::cin.get();
+////        if (c == 'z') break;
+//        int x = c;
+//    }while (c != 'z');
+//
+    HANDLE hStdin;
+    //DWORD cNumRead;
+    //INPUT_RECORD irInBuf[128];
+    hStdin = GetStdHandle(STD_INPUT_HANDLE);
+
+    SetConsoleMode(hStdin, ENABLE_WINDOW_INPUT);
+
+    char buffer[2];
+    DWORD read;
+    int i = 5;
+    while (i)
     {
-        c = getchar();
-//        if (c == 'z') break;
-        int x = c;
-    }while (c != 'z');
+        ReadConsole(hStdin, buffer, sizeof(buffer), &read, nullptr);
+
+        printf("%c", buffer[0]);
+        i--;
+    }
+
+    COORD pos = { 0, 3 };
+    SetConsoleCursorPosition(hnd, pos);
 
     printf("\n\n\tКонец обработки.\n\n");
 
@@ -82,3 +107,4 @@ int main()
 
     SetCurrentConsoleFontEx(hnd, FALSE, &cfi_old);
 }
+

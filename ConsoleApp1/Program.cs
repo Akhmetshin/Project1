@@ -1,4 +1,5 @@
-﻿using System;
+﻿// https://docs.microsoft.com/ru-ru/dotnet/api/system.console.setbuffersize?view=netframework-4.7.2
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,33 +25,36 @@ namespace ConsoleApp1
         [DllImport("kernel32.dll", EntryPoint = "WritePrivateProfileString")]
         private static extern int WritePrivateString(string section, string key, string str, string path);
 
+        //public static int saveBufferWidth;
+        //public static int saveBufferHeight;
+        //public static int saveWindowHeight;
+        //public static int saveWindowWidth;
+        //public static bool saveCursorVisible;
 
         static void Main(string[] args)
         {
             //Console.Title = "Training Calculator";
             Console.Title = "CalcTrain";
 
-            //Console.CursorSize = 100;
+            //saveBufferWidth = Console.BufferWidth;
+            //saveBufferHeight = Console.BufferHeight;
+            //saveWindowHeight = Console.WindowHeight;
+            //saveWindowWidth = Console.WindowWidth;
+            //saveCursorVisible = Console.CursorVisible;
 
-            ConsoleHelper.SetCurrentFont("Consolas", 20);
+            //// Set the smallest possible window size before setting the buffer size.
+            //Console.SetWindowSize(1, 1);
+            //Console.SetBufferSize(60, 20);
+            //Console.SetWindowSize(60, 20);
 
-            Console.ForegroundColor = ConsoleColor.Red;
+            //ConsoleHelper.SetCurrentFont("Consolas", 20);
+
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
 
             //Console.BackgroundColor = ConsoleColor.Green;
             //Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Hello World! My brilliant idea. Version: -1\n");
-
-            //Console.BufferHeight = 30;
-            //Console.SetBufferSize(80, 80);
-
-            //int width = Console.WindowWidth;
-            //int height = Console.WindowHeight;
-
-            //Console.WindowWidth = 60;
-            //Console.WindowHeight = 20;
-
-            //Console.SetWindowSize(60, 20);
 
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
             string IniFile = location.Replace(".exe", ".ini");
@@ -215,26 +219,15 @@ namespace ConsoleApp1
 
                 Thread.Sleep(500);
 
-                Console.CursorLeft = 0;
-                Console.CursorTop = 3;
-                Console.Write("                                               ");
-                //Console.CursorLeft = 0;
-                //Console.CursorTop = 3;
-
             } while (!flagBreak);
 
-            //try
-            //{
-            //    Console.WindowHeight = height;
-            //    Console.WindowWidth = width;
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    Console.Read();
-            //}
-
             WritePrivateString("SECTION", "LEVEL", level.ToString(), IniFile);
+
+            //Console.Clear();
+            //Console.SetWindowSize(1, 1);
+            //Console.SetBufferSize(saveBufferWidth, saveBufferHeight);
+            //Console.SetWindowSize(saveWindowWidth, saveWindowHeight);
+            //Console.CursorVisible = saveCursorVisible;
         }
     }
 }
