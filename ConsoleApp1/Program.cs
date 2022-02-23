@@ -29,7 +29,7 @@ namespace ConsoleApp1
         //public static int saveBufferHeight;
         //public static int saveWindowHeight;
         //public static int saveWindowWidth;
-        //public static bool saveCursorVisible; <- оставил эти комментарии как следы моих усилий по управлению окном и шрифтами. проще через ярлык
+        //public static bool saveCursorVisible; <- оставил эти комментарии как следы моих усилий по управлению окном и шрифтами. много времени потерял. проще через ярлык
 
         static void Main(string[] args)
         {
@@ -56,12 +56,6 @@ namespace ConsoleApp1
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("brilliant");
             Console.ForegroundColor = ConsoleColor.Red;
-
-            //Console.CursorTop = 15;
-            //Console.CursorLeft = 0;
-            //Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            //Console.Write("?? UWP, Android, DirectX, OpenGL, iMac ??\n");
-            //Console.ForegroundColor = ConsoleColor.Red;
 
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
             string IniFile = location.Replace(".exe", ".ini");
@@ -238,6 +232,12 @@ namespace ConsoleApp1
     }
 }
 
+//Console.CursorTop = 15;
+//Console.CursorLeft = 0;
+//Console.ForegroundColor = ConsoleColor.DarkMagenta;
+//Console.Write("?? UWP, Android, DirectX, OpenGL, iMac ??\n");
+//Console.ForegroundColor = ConsoleColor.Red;
+
 /*
- * добавить таймер
+ * и добавить таймер
  */
