@@ -49,7 +49,6 @@ namespace ConsoleApp1
 
             //ConsoleHelper.SetCurrentFont("Consolas", 20); <- установка шрифта. лучше через ярлык. файл ConsoleHelper.cs удалил
 
-            //Console.BackgroundColor = ConsoleColor.Green;
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("Hello World! My brilliant idea. Version: -1");
             Console.CursorTop = 0;
@@ -58,12 +57,18 @@ namespace ConsoleApp1
             Console.Write("brilliant");
             Console.ForegroundColor = ConsoleColor.Red;
 
+            //Console.CursorTop = 15;
+            //Console.CursorLeft = 0;
+            //Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            //Console.Write("?? UWP, Android, DirectX, OpenGL, iMac ??\n");
+            //Console.ForegroundColor = ConsoleColor.Red;
+
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
             string IniFile = location.Replace(".exe", ".ini");
 
             int level;
             level = (int)GetPrivateInt("SECTION", "LEVEL", 1, IniFile);
-            uint beep= GetPrivateInt("SECTION", "BEEP", 1, IniFile);
+            uint beep= GetPrivateInt("SECTION", "BEEP", 1, IniFile); // <- для хакеров)
 
             Random rnd = new Random();
             int a, b; // c, d, e... ets
@@ -72,13 +77,13 @@ namespace ConsoleApp1
             double resD = 1;
             int count = 0;
 
-            char[] oper = { '+', '-', '*', '/' };
+            //char[] oper = { '+', '-', '*', '/' };
             int operMax;
             int indexOper;
             int cursorLeft;
 
             ConsoleKeyInfo cki;
-            Console.CursorTop = 15;
+            //Console.CursorTop = 12;
             aMin = 1; aMax = 4; bMin = 1; bMax = 4;
             operMax = 1;
             res = 0;
@@ -104,7 +109,7 @@ namespace ConsoleApp1
                 b = rnd.Next(bMin, bMax);
                 indexOper=rnd.Next(1,operMax);
 
-                a = 2; b = 100; indexOper = 4;
+                //a = 2; b = 100; indexOper = 4;
                 //a = 1000; b = 900; indexOper = 4;
                 if ((indexOper == 2 || indexOper == 4) && b > a) (b, a) = (a, b); // потому что версия -1.
 
@@ -169,7 +174,7 @@ namespace ConsoleApp1
                     else
                     {
                         Console.CursorLeft = 0;
-                        Console.CursorTop = 15;
+                        Console.CursorTop = 12;
                         Console.CursorVisible = false;
                         Console.Write("                                               ");
                         Console.CursorLeft = 0;
@@ -200,7 +205,7 @@ namespace ConsoleApp1
                     if (count >= 10) { level++; count = 0; }
 
                     Console.CursorLeft = 0;
-                    Console.CursorTop = 15;
+                    Console.CursorTop = 12;
                     Console.Write("                                               ");
                     Console.CursorLeft = 0;
                     Console.CursorTop = 5;
