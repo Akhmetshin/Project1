@@ -1,5 +1,4 @@
-﻿// https://docs.microsoft.com/ru-ru/dotnet/api/system.console.setbuffersize?view=netframework-4.7.2
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
