@@ -1,4 +1,5 @@
-﻿using System;
+﻿// https://docs.microsoft.com/ru-ru/dotnet/api/system.console.setbuffersize?view=netframework-4.7.2
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,40 +25,44 @@ namespace ConsoleApp1
         [DllImport("kernel32.dll", EntryPoint = "WritePrivateProfileString")]
         private static extern int WritePrivateString(string section, string key, string str, string path);
 
+        //public static int saveBufferWidth;
+        //public static int saveBufferHeight;
+        //public static int saveWindowHeight;
+        //public static int saveWindowWidth;
+        //public static bool saveCursorVisible; <- оставил эти комментарии как следы моих усилий по управлению окном и шрифтами. много времени потерял. проще через ярлык
 
         static void Main(string[] args)
         {
             //Console.Title = "Training Calculator";
             Console.Title = "CalcTrain";
 
-            //Console.CursorSize = 100;
+            //saveBufferWidth = Console.BufferWidth;
+            //saveBufferHeight = Console.BufferHeight;
+            //saveWindowHeight = Console.WindowHeight;
+            //saveWindowWidth = Console.WindowWidth;
+            //saveCursorVisible = Console.CursorVisible;
 
-            ConsoleHelper.SetCurrentFont("Consolas", 20);
+            //// Set the smallest possible window size before setting the buffer size.
+            //Console.SetWindowSize(1, 1);
+            //Console.SetBufferSize(60, 20);
+            //Console.SetWindowSize(60, 20);
+
+            //ConsoleHelper.SetCurrentFont("Consolas", 20); <- установка шрифта. лучше через ярлык. файл ConsoleHelper.cs удалил
 
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Clear();
-
-            //Console.BackgroundColor = ConsoleColor.Green;
-            //Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Hello World! My brilliant idea. Version: -1\n");
-            // https://docs.microsoft.com/ru-ru/dotnet/api/system.console.setwindowsize?view=netframework-4.7.2
-            //Console.BufferHeight = 30;
-            //Console.SetBufferSize(80, 80);
-
-            //int width = Console.WindowWidth;
-            //int height = Console.WindowHeight;
-
-            //Console.WindowWidth = 60;
-            //Console.WindowHeight = 20;
-
-            //Console.SetWindowSize(60, 20);
+            Console.Write("Hello World! My brilliant idea. Version: -1");
+            Console.CursorTop = 0;
+            Console.CursorLeft = 16;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("brilliant");
+            Console.ForegroundColor = ConsoleColor.Red;
 
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
             string IniFile = location.Replace(".exe", ".ini");
 
             int level;
             level = (int)GetPrivateInt("SECTION", "LEVEL", 1, IniFile);
-            uint beep= GetPrivateInt("SECTION", "BEEP", 1, IniFile);
+            uint beep= GetPrivateInt("SECTION", "BEEP", 1, IniFile); // <- для хакеров)
 
             Random rnd = new Random();
             int a, b; // c, d, e... ets
@@ -66,13 +71,13 @@ namespace ConsoleApp1
             double resD = 1;
             int count = 0;
 
-            char[] oper = { '+', '-', '*', '/' };
+            //char[] oper = { '+', '-', '*', '/' };
             int operMax;
             int indexOper;
             int cursorLeft;
 
             ConsoleKeyInfo cki;
-            Console.CursorTop = 15;
+            //Console.CursorTop = 12;
             aMin = 1; aMax = 4; bMin = 1; bMax = 4;
             operMax = 1;
             res = 0;
@@ -100,7 +105,7 @@ namespace ConsoleApp1
 
                 //a = 2; b = 100; indexOper = 4;
                 //a = 1000; b = 900; indexOper = 4;
-                if ((indexOper == 2 || indexOper == 4) && b > a) (b, a) = (a, b);
+                if ((indexOper == 2 || indexOper == 4) && b > a) (b, a) = (a, b); // потому что версия -1.
 
                 Console.CursorTop = 3;
                 Console.CursorLeft = 0;
@@ -121,21 +126,22 @@ namespace ConsoleApp1
                 cursorLeft = Console.CursorLeft;
                 string buff;
                 int len = 0;
-                if (indexOper == 4)
-                {
-                    buff = resD.ToString("F");
-                    len = buff.IndexOf('.');
-                }
-                else
+                if (indexOper != 4)
                 {
                     buff = res.ToString();
                     len = buff.Length;
+                }
+                else
+                {
+                    buff = resD.ToString("F");
+                    len = buff.IndexOf('.');
                 }
                 char key;
 
                 for (int i = 0; i < len; i++)
                 {
                     Console.CursorTop = 3;
+                    Console.CursorVisible = true;
                     cki = Console.ReadKey(true);
  
                     if (cki.Key == ConsoleKey.Escape || cki.Key == ConsoleKey.Q) { flagBreak = true; break; }
@@ -162,7 +168,8 @@ namespace ConsoleApp1
                     else
                     {
                         Console.CursorLeft = 0;
-                        Console.CursorTop = 15;
+                        Console.CursorTop = 12;
+                        Console.CursorVisible = false;
                         Console.Write("                                               ");
                         Console.CursorLeft = 0;
                         // https://docs.microsoft.com/ru-ru/dotnet/api/system.console.readkey?view=netframework-4.7.2&f1url=%3FappId%3DDev16IDEF1%26l%3DRU-RU%26k%3Dk(System.Console.ReadKey)
@@ -177,21 +184,22 @@ namespace ConsoleApp1
                     }
                 }
 
+                Console.CursorVisible = false;
+
                 if (!flagBreak)
                 {
                     count++;
                     if (indexOper == 4 && len < buff.Length)
                     {
-                        Console.Write("{0}", buff.Substring(len));
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.Write(" (ok)");
+                        Console.Write("{0} (ok)", buff.Substring(len));
                         Console.ForegroundColor = ConsoleColor.Red;
                         Thread.Sleep(500);
                     }
                     if (count >= 10) { level++; count = 0; }
 
                     Console.CursorLeft = 0;
-                    Console.CursorTop = 15;
+                    Console.CursorTop = 12;
                     Console.Write("                                               ");
                     Console.CursorLeft = 0;
                     Console.CursorTop = 5;
@@ -211,26 +219,25 @@ namespace ConsoleApp1
 
                 Thread.Sleep(500);
 
-                Console.CursorLeft = 0;
-                Console.CursorTop = 3;
-                Console.Write("                                               ");
-                Console.CursorLeft = 0;
-                Console.CursorTop = 3;
-
             } while (!flagBreak);
 
-            //try
-            //{
-            //    Console.WindowHeight = height;
-            //    Console.WindowWidth = width;
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    Console.Read();
-            //}
-
             WritePrivateString("SECTION", "LEVEL", level.ToString(), IniFile);
+
+            //Console.Clear();
+            //Console.SetWindowSize(1, 1);
+            //Console.SetBufferSize(saveBufferWidth, saveBufferHeight);
+            //Console.SetWindowSize(saveWindowWidth, saveWindowHeight);
+            //Console.CursorVisible = saveCursorVisible;
         }
     }
 }
+
+//Console.CursorTop = 15;
+//Console.CursorLeft = 0;
+//Console.ForegroundColor = ConsoleColor.DarkMagenta;
+//Console.Write("?? UWP, Android, DirectX, OpenGL, iMac ??\n");
+//Console.ForegroundColor = ConsoleColor.Red;
+
+/*
+ * и добавить таймер
+ */
