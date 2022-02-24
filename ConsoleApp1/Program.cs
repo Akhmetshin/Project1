@@ -108,9 +108,19 @@ namespace ConsoleApp1
                 b = rnd.Next(bMin, bMax);
                 indexOper=rnd.Next(1,operMax);
 
+                if (indexOper == 4)
+                {
+                    a = rnd.Next(50, 101);
+                    b = rnd.Next(2, 15);
+                }
                 //a = 2; b = 100; indexOper = 4;
                 //a = 1000; b = 900; indexOper = 4;
                 if ((indexOper == 2 || indexOper == 4) && b > a) (b, a) = (a, b); // потому что версия -1.
+                if (indexOper == 3)
+                {
+                    a = rnd.Next(10, 21);
+                    b = rnd.Next(2, 15);
+                }
 
                 Console.CursorTop = 3;
                 Console.CursorLeft = 0;
@@ -150,7 +160,7 @@ namespace ConsoleApp1
                     cki = Console.ReadKey(true);
  
                     if (cki.Key == ConsoleKey.Escape || cki.Key == ConsoleKey.Q) { flagBreak = true; break; }
-                    if (cki.Key == ConsoleKey.Tab) { break; }
+                    if (cki.Key == ConsoleKey.Tab) { count--; break; }
 
                     key = ' ';
                     if (cki.Key >= ConsoleKey.D0 && cki.Key <= ConsoleKey.D9) { key = (char)cki.Key; }
@@ -215,7 +225,9 @@ namespace ConsoleApp1
                     if (level > 10)
                     {
                         level = 10;
+                        Console.BackgroundColor = ConsoleColor.Green;
                         Console.Write("level: max    count = {0}", count, level);
+                        Console.BackgroundColor = ConsoleColor.Black;
                     }
                     else
                     {
