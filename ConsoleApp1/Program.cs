@@ -57,6 +57,12 @@ namespace ConsoleApp1
             Console.Write("brilliant");
             Console.ForegroundColor = ConsoleColor.Red;
 
+            //Console.CursorTop = 15;
+            //Console.CursorLeft = 0;
+            //Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            //Console.Write("?? UWP, Android, DirectX, OpenGL, iMac ??\n");
+            //Console.ForegroundColor = ConsoleColor.Red;
+
             string location = System.Reflection.Assembly.GetEntryAssembly().Location;
             string IniFile = location.Replace(".exe", ".ini");
 
@@ -77,7 +83,6 @@ namespace ConsoleApp1
             int cursorLeft;
 
             ConsoleKeyInfo cki;
-            //Console.CursorTop = 12;
             aMin = 1; aMax = 4; bMin = 1; bMax = 4;
             operMax = 1;
             res = 0;
@@ -145,7 +150,8 @@ namespace ConsoleApp1
                     cki = Console.ReadKey(true);
  
                     if (cki.Key == ConsoleKey.Escape || cki.Key == ConsoleKey.Q) { flagBreak = true; break; }
-                    
+                    if (cki.Key == ConsoleKey.Tab) { break; }
+
                     key = ' ';
                     if (cki.Key >= ConsoleKey.D0 && cki.Key <= ConsoleKey.D9) { key = (char)cki.Key; }
                     if (cki.Key >= ConsoleKey.NumPad0 && cki.Key <= ConsoleKey.NumPad9) { key = (char)(cki.Key - 48); }
@@ -231,12 +237,6 @@ namespace ConsoleApp1
         }
     }
 }
-
-//Console.CursorTop = 15;
-//Console.CursorLeft = 0;
-//Console.ForegroundColor = ConsoleColor.DarkMagenta;
-//Console.Write("?? UWP, Android, DirectX, OpenGL, iMac ??\n");
-//Console.ForegroundColor = ConsoleColor.Red;
 
 /*
  * и добавить таймер
